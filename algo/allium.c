@@ -36,15 +36,19 @@ void allium_hash(void *output, const void *input)
     uint32_t hashA[8], hashB[8];
     char s[80];
 
-    LYRA2(&hashB, 32, input, 80, input, 80, 1, 8, 8);
+    blake2s_hash((unsigned char *) hashA, input);
+
+    // printpfx("lyra", hashA);
+
+    LYRA2(&hashB, 32, hashA, 32, hashA, 32, 1, 8, 8);
 
     // printpfx("lyra", hashB);
 
-    blake2s_simple((unsigned char *) hashA, hashB, 32);
+    // blake2s_simple((unsigned char *) hashA, hashB, 32);
 
     // printpfx("output", hashA);
 
-    memcpy(output, hashA, 32);
+    memcpy(output, hashB, 32);
 }
 
 int scanhash_allium(int thr_id, struct work *work, uint32_t max_nonce, uint64_t *hashes_done)
