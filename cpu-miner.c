@@ -77,6 +77,7 @@ struct workio_cmd {
 };
 
 enum algos {
+	ALGO_ALLIUM,      /* Garlicoin */
 	ALGO_KECCAK,      /* Keccak (old) */
 	ALGO_KECCAKC,     /* Keccak */
 	ALGO_HEAVY,       /* Heavy */
@@ -134,6 +135,7 @@ enum algos {
 };
 
 static const char *algo_names[] = {
+	"allium",
 	"keccak",
 	"keccakc",
 	"heavy",
