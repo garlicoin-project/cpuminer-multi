@@ -2313,7 +2313,7 @@ void print_hash_tests(void)
 	memset(buf, 0, sizeof(buf));
 	//buf[0] = 1; buf[64] = 2; // for endian tests
 
-	blake2s_hash(&hash[0], &buf[0]);
+	allium_hash(&hash[0], &buf[0]);
 	printpfx("allium", hash);
 
 	axiomhash(&hash[0], &buf[0]);

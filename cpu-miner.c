@@ -77,7 +77,6 @@ struct workio_cmd {
 };
 
 enum algos {
-	ALGO_ALLIUM,      /* Garlicoin */
 	ALGO_KECCAK,      /* Keccak (old) */
 	ALGO_KECCAKC,     /* Keccak */
 	ALGO_HEAVY,       /* Heavy */
@@ -135,7 +134,6 @@ enum algos {
 };
 
 static const char *algo_names[] = {
-	"allium",
 	"keccak",
 	"keccakc",
 	"heavy",
@@ -294,6 +292,7 @@ static char const usage[] = "\
 Usage: " PACKAGE_NAME " [OPTIONS]\n\
 Options:\n\
   -a, --algo=ALGO       specify the algorithm to use\n\
+                          allium       Garlicoin\n\
                           axiom        Shabal-256 MemoHash\n\
                           bitcore      Timetravel with 10 algos\n\
                           blake        Blake-256 14-rounds (SFR)\n\
@@ -2192,9 +2191,13 @@ static void *miner_thread(void *userdata)
 
 		/* scan nonces for a proof-of-work hash */
 		switch (opt_algo) {
+<<<<<<< HEAD
 		case ALGO_ALLIUM:
-			rc = scanhash_allum(thr_id, &work, max_nonce, &hashes_done);
+			rc = scanhash_allium(thr_id, &work, max_nonce, &hashes_done);
 			break;
+=======
+
+>>>>>>> parent of 1165f31... Add allium
 		case ALGO_AXIOM:
 			rc = scanhash_axiom(thr_id, &work, max_nonce, &hashes_done);
 			break;

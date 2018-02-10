@@ -8,19 +8,19 @@
 #include <string.h>
 #include <stdint.h>
 
-#include "blake2.h"
-#include "lyra2re.c"
+// #include "blake2.c"
+// #include "lyra2re.c"
 
 void allium_hash(void *state, const void *input)
 {
     uint32_t _ALIGN(128) a_hash[8];
-    lyra2_hash(a_hash, input)
+    lyra2_hash(a_hash, input);
     blake2s_hash(state, a_hash);
 }
 
 int scanhash_allium(int thr_id, struct work *work, uint32_t max_nonce, uint64_t *hashes_done)
 {
-	uint32_t _ALIGN(128) vhashcpu[8];
+	uint32_t _ALIGN(128) hash[8];
 	uint32_t _ALIGN(128) endiandata[20];
 	uint32_t *pdata = work->data;
 	uint32_t *ptarget = work->target;
@@ -41,8 +41,8 @@ int scanhash_allium(int thr_id, struct work *work, uint32_t max_nonce, uint64_t 
 		be32enc(&endiandata[19], n);
 		allium_hash(hash, endiandata);
 
-		if (vhashcpu[7] < Htarg && fulltest(vhashcpu, ptarget)) {
-			work_set_target_ratio(work, vhashcpu);
+		if (hash[7] < Htarg && fulltest(hash, ptarget)) {
+			work_set_target_ratio(work, hash);
 			*hashes_done = n - first_nonce + 1;
 			pdata[19] = n;
 			return 1;
