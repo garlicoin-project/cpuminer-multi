@@ -17,34 +17,32 @@
 // #include "blake2.c"
 // #include "lyra2re.c"
 
-// #define printpfx(n,h) \
-// 	printf("%s%11s%s: %s\n", CL_CYN, n, CL_N, format_hash(s, (uint8_t*) h))
+#define printpfx(n,h) \
+	printf("%s%11s%s: %s\n", CL_CYN, n, CL_N, format_hash(s, (uint8_t*) h))
 
-// static char* format_hash(char* buf, uint8_t *hash)
-// {
-// 	int len = 0;
-// 	for (int i=0; i < 32; i += 4) {
-// 		len += sprintf(buf+len, "%02x%02x%02x%02x ",
-// 			hash[i], hash[i+1], hash[i+2], hash[i+3]);
-// 	}
-// 	return buf;
-// }
+static char* format_hash(char* buf, uint8_t *hash)
+{
+	int len = 0;
+	for (int i=0; i < 32; i += 4) {
+		len += sprintf(buf+len, "%02x%02x%02x%02x ",
+			hash[i], hash[i+1], hash[i+2], hash[i+3]);
+	}
+	return buf;
+}
 
-void allium_hash(void *output, const char *input)
+void allium_hash(void *output, const void *input)
 {
     int inputLen = 80;
     uint32_t hashA[8], hashB[8];
-    // char s[80];
+    char s[80];
 
-    // printpfx("input", hashA);
-
-    LYRA2(&hashB, 32, input, 32, input, 32, 1, 8, 8);
+    LYRA2(&hashB, 32, input, 80, input, 80, 1, 8, 8);
 
     // printpfx("lyra", hashB);
 
-    blake2s_simple(hashA, hashB, 32);
+    blake2s_simple((unsigned char *) hashA, hashB, 32);
 
-    // printpfx("test2", hashA);
+    // printpfx("output", hashA);
 
     memcpy(output, hashA, 32);
 }

@@ -1814,6 +1814,7 @@ static void stratum_gen_work(struct stratum_ctx *sctx, struct work *work)
 				work_set_target(work, sctx->job.diff / (256.0 * opt_diff_factor));
 				break;
 			case ALGO_KECCAK:
+			case ALGO_ALLIUM:
 			case ALGO_LYRA2:
 				work_set_target(work, sctx->job.diff / (128.0 * opt_diff_factor));
 				break;
@@ -2132,6 +2133,7 @@ static void *miner_thread(void *userdata)
 			case ALGO_YESCRYPT:
 				max64 = 0x1ff;
 				break;
+			case ALGO_ALLIUM:
 			case ALGO_LYRA2:
 			case ALGO_LYRA2REV2:
 			case ALGO_TIMETRAVEL:
