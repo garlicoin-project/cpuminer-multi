@@ -77,6 +77,7 @@ struct workio_cmd {
 };
 
 enum algos {
+	ALGO_ALLIUM,      /* Garlicoin */
 	ALGO_KECCAK,      /* Keccak (old) */
 	ALGO_KECCAKC,     /* Keccak */
 	ALGO_HEAVY,       /* Heavy */
@@ -134,6 +135,7 @@ enum algos {
 };
 
 static const char *algo_names[] = {
+	"allium",
 	"keccak",
 	"keccakc",
 	"heavy",
@@ -2190,7 +2192,9 @@ static void *miner_thread(void *userdata)
 
 		/* scan nonces for a proof-of-work hash */
 		switch (opt_algo) {
-
+		case ALGO_ALLIUM:
+			rc = scanhash_allum(thr_id, &work, max_nonce, &hashes_done);
+			break;
 		case ALGO_AXIOM:
 			rc = scanhash_axiom(thr_id, &work, max_nonce, &hashes_done);
 			break;
