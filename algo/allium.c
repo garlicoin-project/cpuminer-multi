@@ -14,7 +14,7 @@
 void allium_hash(void *state, const void *input)
 {
     uint32_t _ALIGN(128) a_hash[8];
-    lyra2_hash(a_hash, input);
+	LYRA2(a_hash, 32, input, 80, input, 80, 1, 8, 8);
     blake2s_hash(state, a_hash);
 }
 
